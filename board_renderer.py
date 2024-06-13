@@ -1,6 +1,8 @@
 from colorama import just_fix_windows_console, Fore
 
 just_fix_windows_console
+
+
 def render_board(game_positions):
     fields = {i: Fore.WHITE for i in range(40)}
     figures_on_b_fields = {key: 0 for key in game_positions.keys()}
@@ -16,12 +18,12 @@ def render_board(game_positions):
         term_reset = Fore.RESET
         for field_id in game_positions[color]:
             if field_id == -1:
-                figures_on_b_fields[color] +=1
+                figures_on_b_fields[color] += 1
             else:
                 fields[field_id] = term_color
     print(fields)
     print(figures_on_b_fields)
-# sorry for this gore code from hell :=)
+    # sorry for this gore code from hell :=)
     field = """
     OO      {28}o{reset} {29}o{reset} {30}O      OO
     OO      {27}o{reset} O {31}o{reset}      OO
@@ -34,10 +36,15 @@ def render_board(game_positions):
             {12}o{reset} O {6}o{reset}
     OO      {11}o{reset} O {7}o{reset}      OO
     OO      {10}O {9}o{reset} {8}o{reset}      OO
-    """.format(*fields.values(), reset = Fore.RESET)
+    """.format(*fields.values(), reset=term_reset)
     print(field)
 
+
 if __name__ == "__main__":
-    game_positions = {'red': [-1, 10, 16, -1], 'blue': [-1, -1, 4, -1], 'yellow': [17, -1, 7, 11]}
+    game_positions = {
+        "red": [-1, 10, 16, -1],
+        "blue": [-1, -1, 4, -1],
+        "yellow": [17, -1, 7, 11],
+    }
 
     render_board(game_positions)
