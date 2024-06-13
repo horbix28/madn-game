@@ -16,7 +16,7 @@ Mensch ärgere Dich nicht Original Spielbrett
 
 ## Unterschiede zum normalen Spiel:
   *  Schwarz lässt sich durch RGB-LEDs schlecht darstellen, daher ist Schwarz bei uns Blau
-  * 
+  *  Board ist 40x40cm statt 30x30cm
 
 ## Materialliste
 - [x] 1x Raspberry-PI
