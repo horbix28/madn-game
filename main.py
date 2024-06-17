@@ -6,6 +6,7 @@ import colorama
 
 colorama.just_fix_windows_console()
 from time import sleep
+from board_renderer import render_board
 
 
 class MenschAergereDichNicht:
@@ -114,7 +115,7 @@ class MenschAergereDichNicht:
                             for i in movable_figures
                         ]
                     ),
-                    "\n which one do u like to move?",
+                    "\nwhich one do u like to move?",
                 )
                 move_fig = None
                 while not move_fig in movable_figures:
@@ -127,13 +128,12 @@ class MenschAergereDichNicht:
                 print("No movable figure")
             sleep(0.5)
             print("\n\n\n\n\n\n")
+            render_board(self.positions)
             if current_player < len(self.players) - 1:
                 current_player += 1
             else:
                 current_player = 0
 
-
-_____________
 
 
 """
