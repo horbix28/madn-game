@@ -21,8 +21,8 @@ def render_board(game_positions):
                 figures_on_b_fields[color] += 1
             else:
                 fields[field_id] = term_color
-    print(fields)
-    print(figures_on_b_fields)
+    # print(fields)
+    # print(figures_on_b_fields)
     # sorry for this gore code from hell :=)
     field = """
     OO      {28}o{reset} {29}o{reset} {30}O      OO
