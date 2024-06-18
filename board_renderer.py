@@ -38,7 +38,7 @@ def render_board(game_positions):
                 figs.append(term_color)
         while len(figs) < 4:
                 figs.append(Fore.BLACK)
-        print(color, figs)
+        # print(color, figs)
         for fig in figs:
             index = len(fields)
             fields[index] = fig

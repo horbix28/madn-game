@@ -10,7 +10,7 @@ from time import sleep
 from board_renderer import render_board
 
 
-logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
+logging.basicConfig(stream=sys.stderr, level=logging.INFO)
 
 
 class MenschAergereDichNicht:
@@ -37,10 +37,8 @@ class MenschAergereDichNicht:
         # Check if figure is home
         if current_pos == -1:
             if steps == 6:
-                logging.info(f"{color.capitalize()} piece {piece_index} starts.")
                 calculated_pos = self.start_positions[color]
             else:
-                logging.info(f"{color.capitalize()} piece {piece_index} cannot move yet. Roll a 6 to start.")
                 calculated_pos = None
         else:
             calculated_pos = (current_pos + steps) % 39
