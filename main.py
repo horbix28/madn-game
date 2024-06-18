@@ -33,14 +33,20 @@ class MenschAergereDichNicht:
         if current_pos == -1:
             if steps == 6:
                 # print(f"{color.capitalize()} piece {piece_index} starts.")
-                return self.start_positions[color]
+                calculated_pos = self.start_positions[color]
             # else:
             # print(f"{color.capitalize()} piece {piece_index} cannot move yet. Roll a 6 to start.")
+            else:
+                calculated_pos = None
+        else:
+            calculated_pos = (current_pos + steps) % 39
+        # print("calculated newpos:", calculated_pos)
+        print("checking if newpos", calculated_pos, "is in list of own figures", self.positions[color])
+        if calculated_pos in self.positions[color]:
+            print("own figure is blocking")
             return None
-
         # return new position
-        return (current_pos + steps) % 39
-
+        return calculated_pos
     def move_piece(self, color, piece_index, steps):
         if color not in self.players:
             raise ValueError(f"{color} is not playing.")
@@ -91,18 +97,18 @@ class MenschAergereDichNicht:
         return moveable_figures, immovable_figures
 
     def roll_dice(self):
-        return random.randint(0, 6)
+        return random.randint(1, 6)
 
     def game_loop(self):
         current_player = random.randint(0, len(self.players) - 1)
         while not self.game_over:
             player = self.players[current_player]
             print(player + "s", "player turn.")
-            self.display_board()
-            print("\nYour figures now: ", self.display_color_pieces(player))
-            roll = self.roll_dice()
-            # roll = 6
-            print(f"Figures after dice roll {roll}:")
+            # self.display_board()
+            # print("\nYour figures now: ", self.display_color_pieces(player))
+            # roll = self.roll_dice()
+            roll = int(input("Würfel: "))
+            print(f"Rolled: {roll}:")
             movable_figures, immovable_figures = self.calc_dice_roll_effect(
                 player, roll
             )
@@ -126,9 +132,9 @@ class MenschAergereDichNicht:
 
             else:
                 print("No movable figure")
-            sleep(0.5)
             print("\n\n\n\n\n\n")
             render_board(self.positions)
+            sleep(0.5)
             if current_player < len(self.players) - 1:
                 current_player += 1
             else:
@@ -151,7 +157,7 @@ OO      O o o      OO
 """
 
 
-players = ["red", "blue"]  # Zwei Spieler: red und blue
+players = ["red", "blue", "yellow", "green"]  # Zwei Spieler: red und blue
 game = MenschAergereDichNicht(players)
 game.game_loop()
 
