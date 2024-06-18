@@ -16,7 +16,7 @@ def render_board(game_positions):
             term_color = Fore.YELLOW
         elif color == "green":
             term_color = Fore.GREEN
-        term_reset = Fore.RESET
+        # term_reset = Fore.RESET
         for field_id in game_positions[color]:
             if field_id == -1:
                 figures_on_b_fields[color] += 1
@@ -60,7 +60,7 @@ def render_board(game_positions):
             {13}o{r} O {5}o{r}
             {12}o{r} O {6}o{r}
     {44}O{r}{45}O{r}      {11}o{r} O {7}o{r}      {40}O{r}{41}O{r}
-    {46}O{r}O{47}      {10}O {9}o{r} {8}o{r}      {42}O{r}{43}O{r}
+    {46}O{r}{47}O{r}      {10}O {9}o{r} {8}o{r}      {42}O{r}{43}O{r}
     """.format(*fields.values(), r=Fore.BLACK) + Fore.RESET
     print(field)
 
