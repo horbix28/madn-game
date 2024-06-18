@@ -1,6 +1,6 @@
 # madn-game
 
-![Mensch ärgere Dich nicht Original Spielbrett](720px-Mensch_ärgere_dich_nicht_4.svg.png)
+![Mensch ärgere Dich nicht Original Spielbrett](bilder/720px-Mensch_ärgere_dich_nicht_4.svg.png)
 
 Mensch ärgere Dich nicht Original Spielbrett 
 > Von Antonsusi - Original gameboard, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=112685275
@@ -16,7 +16,6 @@ Mensch ärgere Dich nicht Original Spielbrett
 
 ## Unterschiede zum normalen Spiel:
   *  Schwarz lässt sich durch RGB-LEDs schlecht darstellen, daher ist Schwarz bei uns Blau
-  *  Board ist 40x40cm statt 30x30cm
 
 ## Materialliste
 - [x] 1x Raspberry-PI
@@ -26,6 +25,13 @@ Mensch ärgere Dich nicht Original Spielbrett
 - [ ] Plexiglas für Spielbrett
 - [ ] 3D-Drucker
 - [ ] PLA oder PETG Filament
+
+## Planung
+
+### Abmessungen des Spielbretts
+  * Original Brett ca. 300mmx300mm groß
+  * Unser Brett wird 400mmx400mm groß
+  * Die Abmessungen der einzelnen Felder sind dann wie folgt ![](bilder/Mensch_ärgere_dich_nicht_4-abmessungen.png | width=720) eingezeichnet
 
 
 
