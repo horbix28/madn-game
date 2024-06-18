@@ -22,22 +22,46 @@ def render_board(game_positions):
                 figures_on_b_fields[color] += 1
             else:
                 fields[field_id] = term_color
-    # print(fields)
+    for color in ["red", "blue", "yellow", "green"]:
+        figs = []
+        if figures_on_b_fields.get(color):
+            for _ in range(figures_on_b_fields.get(color,0)):
+                if color == "red":
+                    term_color = Fore.RED
+                elif color == "blue":
+                    term_color = Fore.BLUE
+                elif color == "yellow":
+                    term_color = Fore.YELLOW
+                elif color == "green":
+                    term_color = Fore.GREEN
+                # print(color, "appending")
+                figs.append(term_color)
+        while len(figs) < 4:
+                figs.append(Fore.BLACK)
+        print(color, figs)
+        for fig in figs:
+            index = len(fields)
+            fields[index] = fig
+            # print(index, fig)
+    # while len(fields) < 55:
+    #     index = len(fields)
+    #     fields[index] = Fore.BLACK
+
     # print(figures_on_b_fields)
-    # sorry for this gore code from hell :=)
+    # sorry for this code from hell :=)
     field = Style.BRIGHT +"""
-    OO      {28}o{reset} {29}o{reset} {30}O{reset}      OO
-    OO      {27}o{reset} O {31}o{reset}      OO
-            {26}o{reset} O {32}o{reset}
-            {25}o{reset} O {33}o{reset}
-    {20}O {21}o{reset} {22}o{reset} {23}o{reset} {24}o{reset} O {34}o{reset} {35}o{reset} {36}o{reset} {37}o{reset} {38}o{reset}
-    {19}o{reset} O O O O   O O O O {39}o{reset}
-    {18}o{reset} {17}o{reset} {16}o{reset} {15}o{reset} {14}o{reset} O {4}o{reset} {3}o{reset} {2}o{reset} {1}o{reset} {0}O
-            {13}o{reset} O {5}o{reset}
-            {12}o{reset} O {6}o{reset}
-    OO      {11}o{reset} O {7}o{reset}      OO
-    OO      {10}O {9}o{reset} {8}o{reset}      OO
-    """.format(*fields.values(), reset=Fore.BLACK) + Fore.RESET
+    {48}O{r}{49}O{r}      {28}o{r} {29}o{r} {30}O{r}      {52}O{r}{53}O{r}
+    {50}O{r}{51}O{r}      {27}o{r} O {31}o{r}      {54}O{r}{55}O{r}
+            {26}o{r} O {32}o{r}
+            {25}o{r} O {33}o{r}
+    {20}O {21}o{r} {22}o{r} {23}o{r} {24}o{r} O {34}o{r} {35}o{r} {36}o{r} {37}o{r} {38}o{r}
+    {19}o{r} O O O O   O O O O {39}o{r}
+    {18}o{r} {17}o{r} {16}o{r} {15}o{r} {14}o{r} O {4}o{r} {3}o{r} {2}o{r} {1}o{r} {0}O
+            {13}o{r} O {5}o{r}
+            {12}o{r} O {6}o{r}
+    {44}O{r}{45}O{r}      {11}o{r} O {7}o{r}      {40}O{r}{41}O{r}
+    {46}O{r}O{47}      {10}O {9}o{r} {8}o{r}      {42}O{r}{43}O{r}
+    """.format(*fields.values(), r=Fore.BLACK) + Fore.RESET
     print(field)
 
 
@@ -46,6 +70,7 @@ if __name__ == "__main__":
         "red": [-1, 10, 16, -1],
         "blue": [-1, -1, 4, -1],
         "yellow": [17, -1, 7, 11],
+        "green": [-1,-1,-1,-1]
     }
 
     render_board(game_positions)
