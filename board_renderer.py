@@ -1,6 +1,7 @@
-from colorama import just_fix_windows_console, Fore
-
-just_fix_windows_console
+from colorama import just_fix_windows_console, Fore, Style
+from sys import platform
+if platform == "win32":
+    just_fix_windows_console
 
 
 def render_board(game_positions):
@@ -24,8 +25,8 @@ def render_board(game_positions):
     # print(fields)
     # print(figures_on_b_fields)
     # sorry for this gore code from hell :=)
-    field = """
-    OO      {28}o{reset} {29}o{reset} {30}O      OO
+    field = Style.BRIGHT +"""
+    OO      {28}o{reset} {29}o{reset} {30}O{reset}      OO
     OO      {27}o{reset} O {31}o{reset}      OO
             {26}o{reset} O {32}o{reset}
             {25}o{reset} O {33}o{reset}
@@ -36,7 +37,7 @@ def render_board(game_positions):
             {12}o{reset} O {6}o{reset}
     OO      {11}o{reset} O {7}o{reset}      OO
     OO      {10}O {9}o{reset} {8}o{reset}      OO
-    """.format(*fields.values(), reset=term_reset)
+    """.format(*fields.values(), reset=Fore.BLACK) + Fore.RESET
     print(field)
 
 
