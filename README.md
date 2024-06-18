@@ -31,7 +31,7 @@ Mensch ärgere Dich nicht Original Spielbrett
 ### Abmessungen des Spielbretts
   * Original Brett ca. 300mmx300mm groß
   * Unser Brett wird 400mmx400mm groß
-  * Die Abmessungen der einzelnen Felder sind dann wie folgt ![](bilder/Mensch_ärgere_dich_nicht_4-abmessungen.png | width=720) eingezeichnet
+  * Die Abmessungen der einzelnen Felder sind [hier](bilder/Mensch_ärgere_dich_nicht_4-abmessungen.png) eingezeichnet.
 
 
 
