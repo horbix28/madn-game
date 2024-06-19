@@ -33,4 +33,8 @@ if __name__ == "__main__":
         Color("yellow", (255,255,0), Fore.YELLOW): [17, -1, 7, 11],
         Color("green", (0,255,0), Fore.GREEN): [-1,-1,-1,-1]
     }
+<<<<<<< HEAD
     generate_leds(game_positions)
+=======
+    render_leds(game_positions)
+>>>>>>> a0cea3ee0a8fcfc7369d184fa4a6aea54b7cf21e
