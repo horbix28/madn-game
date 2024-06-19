@@ -8,6 +8,7 @@ import logging, sys
 just_fix_windows_console()
 from time import sleep
 from board_renderer import render_board
+from led_renderer_raspi import generate_leds
 
 
 logging.basicConfig(stream=sys.stderr, level=logging.INFO)
@@ -82,7 +83,7 @@ class MenschAergereDichNicht:
                     if pos == new_pos:
                         self.positions[opponent_name][i] = -1
                         print(
-                            f"{color.capitalize()} piece {piece_index} knocked out {opponent_name.capitalize()} piece {i}!"
+                            f"{color.name.capitalize()} piece {piece_index} knocked out {opponent_name.name.capitalize()} piece {i}!"
                         )
 
     def display_board(self):
@@ -146,6 +147,7 @@ class MenschAergereDichNicht:
             else:
                 print("No movable figure")
             print("\n\n\n\n\n\n")
+            generate_leds(self.positions)
             render_board(self.positions)
             sleep(0.5)
             if current_player < len(self.players) - 1:
