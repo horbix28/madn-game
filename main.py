@@ -45,7 +45,7 @@ class MenschAergereDichNicht:
         logging.debug("Calculating newpos for color: %s figure: %s steps %s", color, piece_index, steps)
         current_pos = self.positions[color][piece_index]
 
-        # Check if figure is home
+        # Check if figure is on b field
         if current_pos == -1:
             if steps == 6:
                 calculated_pos = self.start_positions[color]
