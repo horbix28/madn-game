@@ -8,32 +8,18 @@ def render_board(game_positions):
     fields = {i: Fore.WHITE for i in range(40)}
     figures_on_b_fields = {key: 0 for key in game_positions.keys()}
     for color in game_positions:
-        if color == "red":
-            term_color = Fore.RED
-        elif color == "blue":
-            term_color = Fore.BLUE
-        elif color == "yellow":
-            term_color = Fore.YELLOW
-        elif color == "green":
-            term_color = Fore.GREEN
+        term_color = color.term_color
         # term_reset = Fore.RESET
         for field_id in game_positions[color]:
             if field_id == -1:
                 figures_on_b_fields[color] += 1
             else:
                 fields[field_id] = term_color
-    for color in ["red", "blue", "yellow", "green"]:
+    for color in game_positions:
         figs = []
         if figures_on_b_fields.get(color):
             for _ in range(figures_on_b_fields.get(color,0)):
-                if color == "red":
-                    term_color = Fore.RED
-                elif color == "blue":
-                    term_color = Fore.BLUE
-                elif color == "yellow":
-                    term_color = Fore.YELLOW
-                elif color == "green":
-                    term_color = Fore.GREEN
+                term_color = color.term_color
                 # print(color, "appending")
                 figs.append(term_color)
         while len(figs) < 4:
@@ -66,11 +52,11 @@ def render_board(game_positions):
 
 
 if __name__ == "__main__":
+    from main import Color
     game_positions = {
-        "red": [-1, 10, 16, -1],
-        "blue": [-1, -1, 4, -1],
-        "yellow": [17, -1, 7, 11],
-        "green": [-1,-1,-1,-1]
+        Color("red",(255,0,0), Fore.RED): [-1, 39, 16, -1],
+        Color("blue", (0,0,255), Fore.BLUE): [-1, -1, 4, -1],
+        Color("yellow", (255,255,0), Fore.YELLOW): [17, -1, 7, 11],
+        Color("green", (0,255,0), Fore.GREEN): [-1,-1,-1,-1]
     }
-
     render_board(game_positions)
