@@ -1,7 +1,7 @@
-empty_color = (255,255,255)
+EMPTY_COLOR = (255,255,255)
 
 def generate_leds(game_positions):
-    fields = {index: empty_color for index in range(40)}
+    fields = {index: EMPTY_COLOR for index in range(40)}
     figures_on_b_fields = {key: 0 for key in game_positions.keys()}
     for player in game_positions:
         # term_reset = Fore.RESET
@@ -17,7 +17,7 @@ def generate_leds(game_positions):
                 # print(player, "appending")
                 figs.append(player.rgb)
         while len(figs) < 4:
-                figs.append(empty_color)
+                figs.append(EMPTY_COLOR)
         # print(player.name, figs)
         for fig in figs:
             index = len(fields)
