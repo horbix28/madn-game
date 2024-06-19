@@ -1,7 +1,7 @@
 from colorama import just_fix_windows_console, Fore, Style
 from sys import platform
 if platform == "win32":
-    just_fix_windows_console
+    just_fix_windows_console()
 
 
 def render_board(game_positions):
