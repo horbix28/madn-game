@@ -1,20 +1,30 @@
 import threading
 import queue
 import time
-NUM_PIXELS = 15
 
-pixels = [(0,0,0) for i in range(NUM_PIXELS)]
+import neopixel_spi as neopixel
+import board
+NUM_PIXELS = 144
+PIXEL_ORDER = neopixel.GRB
+
+spi = board.SPI()
+
+pixels = neopixel.NeoPixel_SPI(spi,
+                               NUM_PIXELS,
+                               pixel_order=PIXEL_ORDER,
+                               auto_write=True, bit0=0b10000000, brightness=0.3)
+
+
+
+
+# pixels = [(0,0,0) for i in range(NUM_PIXELS)]
 command_queue = queue.Queue()
 
 import threading
 import queue
 import time
-NUM_PIXELS = 144
-
 
 blinking_threads = {}
-
-pixels = [(0,0,0) for i in range(NUM_PIXELS)]
 command_queue = queue.Queue()
 
 
@@ -76,7 +86,10 @@ if __name__ == "__main__":
     try:
         set_pixel(0, (255, 0, 0))  # Set first pixel to red
         time.sleep(1)
-        blink_pixel(10,(200,200,100),100, 20)
+        blink_pixel(10,(200,200,100),500, 20)
+        blink_pixel(11,(100,200,50),500, 20)
+        blink_pixel(12,(0,200,50),500, 20)
+        blink_pixel(15,(230,150,0),250, 21)
         time.sleep(1)
         set_pixel(1, (0, 255, 0))  # Set second pixel to green
         time.sleep(1)
