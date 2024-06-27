@@ -1,93 +1,62 @@
-import threading
-import queue
-import time
-NUM_PIXELS = 15
+import asyncio
+import neopixel_spi as neopixel
+import board
 
-pixels = [(0,0,0) for i in range(NUM_PIXELS)]
-command_queue = queue.Queue()
-
-import threading
-import queue
-import time
 NUM_PIXELS = 144
+PIXEL_ORDER = neopixel.GRB
+spi = board.SPI()
+pixels = neopixel.NeoPixel_SPI(spi, NUM_PIXELS, pixel_order=PIXEL_ORDER, auto_write=True, bit0=0b10000000, brightness=0.3)
 
-
-blinking_threads = {}
-
-pixels = [(0,0,0) for i in range(NUM_PIXELS)]
-command_queue = queue.Queue()
-
-
-def blink_led(pixels, index, color, blink_delay, blink_count):
+async def blink_led(pixels, index, color, blink_delay, blink_count):
     for _ in range(blink_count):
         print("blinking", index, "with color", color)
         pixels[index] = color
-        time.sleep(blink_delay/1000)
-        pixels[index] = (0,0,0)
-        time.sleep(blink_delay/1000)
-    blinking_threads.pop(index)
+        await asyncio.sleep(blink_delay / 1000)
+        pixels[index] = (0, 0, 0)
+        await asyncio.sleep(blink_delay / 1000)
 
-def handle_led_commands():
+async def handle_led_commands(command_queue):
     while True:
-        print(pixels)
-        try:
-            args  = command_queue.get()
-            command, index, color, *_ = args
-            print(command, index, color)
-            if command is None:  # Shutdown signal
-                break
-            # elif 0 <= index < NUM_PIXELS:
-            #     print("index not valid")
-            #     break
-            elif command == "set":
-                pixels[index] = color
-                print(f"Pixel {index} set to {color}")  # Add this line for debugging
-            elif command == "blink":
-                _,_,_, blink_delay, blink_times = args
-                if blinking_threads.get(index):
-                    print("!!!!! led", index, "already blinking")
-                else:
-                    led_blink_thread = threading.Thread(target=blink_led, args=(pixels, index, color,blink_delay,blink_times))
-                    led_blink_thread.daemon = True
-                    led_blink_thread.start()
-                    print(f"Pixel {index} started {color} blinking")  # Add this line for debugging
-                    blinking_threads[index] = led_blink_thread
-                
-        except queue.Empty:
-            print("queue empty")
-            # Hier kannst du weitere Aktionen ausführen, wenn keine Befehle vorhanden sind
-            pass
+        command_data = await command_queue.get()
+        if command_data is None:  # Shutdown signal
+            break
 
-def set_pixel(index, color):
-    command_queue.put(("set", index, color),block=False)
-def blink_pixel(index, color, time_off, blink_times):
-    command_queue.put(("blink", index, color, time_off, blink_times),block=False)
+        command, index, color, *args = command_data
+        print(f"Handling command: {command} for index {index} with color {color}")
 
-led_control_thread = threading.Thread(target=handle_led_commands)
-led_control_thread.daemon = True
-led_control_thread.start()
+        if command == "set":
+            pixels[index] = color
+            print(f"Pixel {index} set to {color}")
+        elif command == "blink":
+            blink_delay, blink_times = args
+            await blink_led(pixels, index, color, blink_delay, blink_times)
 
+def set_pixel(command_queue, index, color):
+    command_queue.put_nowait(("set", index, color))
 
+def blink_pixel(command_queue, index, color, blink_delay, blink_times):
+    command_queue.put_nowait(("blink", index, color, blink_delay, blink_times))
 
-
-if __name__ == "__main__":
-    # manual test goes here
-    # Example usage
+async def main():
+    command_queue = asyncio.Queue()
+    led_task = asyncio.create_task(handle_led_commands(command_queue))
+    
     try:
-        set_pixel(0, (255, 0, 0))  # Set first pixel to red
-        time.sleep(1)
-        blink_pixel(10,(200,200,100),100, 20)
-        time.sleep(1)
-        set_pixel(1, (0, 255, 0))  # Set second pixel to green
-        time.sleep(1)
-        print(blinking_threads)
-        set_pixel(2, (0, 0, 255))  # Set third pixel to blue
-        time.sleep(1)
-        set_pixel(0, (0, 0, 0))    # Turn off first pixel
-        time.sleep(1)
+        set_pixel(command_queue, 0, (255, 0, 0))
+        await asyncio.sleep(1)
+        blink_pixel(command_queue, 10, (200, 200, 100), 500, 20)
+        await asyncio.sleep(1)
+        set_pixel(command_queue, 1, (0, 255, 0))
+        await asyncio.sleep(1)
+        set_pixel(command_queue, 2, (0, 0, 255))
+        await asyncio.sleep(1)
+        set_pixel(command_queue, 0, (0, 0, 0))
+        await asyncio.sleep(1)
     except KeyboardInterrupt:
         print("Shutting down.")
     finally:
-        for thread in tuple(blinking_threads.values()): # very ugly way of waiting for all blink threads to finish
-            thread.join()
-        command_queue.put(None)  # Send shutdown signal to the thread
+        command_queue.put_nowait(None)  # Send shutdown signal to the coroutine
+        await led_task  # Ensure the task exits cleanly
+
+if __name__ == "__main__":
+    asyncio.run(main())
